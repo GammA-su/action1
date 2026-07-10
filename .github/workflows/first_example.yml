@@ -11,7 +11,7 @@ jobs:
       - name: Execute Cowsay CMD
         run: cowsay -f dragon "Run for cover, I am a DRAGON...RAWR" >> dragon.txt
       - name: Upload the Dragon text file
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: dragon-text-file
           path: dragon.txt
