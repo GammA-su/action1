@@ -1,16 +1,28 @@
-name : My first workflow
+name : Second action
 
 on : push
 
 jobs:
-    first_job:
-        runs-on: ubuntu-latest
-        steps: 
-        - name: Checkout repo
-          uses: actions/checkout@v4
-        - name: List and read files
-          run: | 
-            echo "My first workflow"
-            ls -ltra
-            cat README.md
-            
+  build_job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Cogsay Program
+        run: sudo apt-get install cowsay -y
+      - name: Execute Cowsay CMD
+        run: cowsay -f dragon "Run for cover, I am a DRAGON...RAWR" >> dragon.txt
+      - name: Sleep for 5 second
+        run: sleep 5
+  test_job_2:
+    needs: build_job_1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep for 10 seconds
+        run: sleep 10
+      - name: Test File exists
+        run: grep -i "dragon" dragon.txt
+  deploy_job_3:
+    needs: [build_job_1]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read File
+        run: cat dragon.txt
